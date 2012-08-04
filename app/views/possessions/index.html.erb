@@ -1,0 +1,5 @@
+<h1>Find some stuff!</h1>
+<% @possessions.each do |possession| %>
+<li><<%= possession.name + " | " + possession.user </li>
+<%= possession.description %>
+
