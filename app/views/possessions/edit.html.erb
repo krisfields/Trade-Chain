@@ -1,2 +1,19 @@
-<h1>Possessions#edit</h1>
-<p>Find me in app/views/possessions/edit.html.erb</p>
+<% provide(:title, 'Edit an Item') %>
+<h1>Edit <%= @possession.name %></h1>
+
+<div class="row">
+  <div class="span6 offset1">
+  	<b>Description:</b> <%= @possession.description %>
+    <%= simple_form_for(@possession) do |f| %>
+      <%= f.input :value %>
+      <%= f.submit "Add Item", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+  <div class="column">
+  	<h2>I can only edit the value?</h2>
+    Yes. If you wish to edit the title or description, you'll have to delete the item and re-add it.  Imagine you mark that you want an item because it sounds awesome, but then the owner of the item edits it and now it's not so awesome.  That would suck, right?
+
+    <div><%= link_to "Delete Item", possession_path(@possession), method: :delete, confirm: "Are you sure?" %>
+    </div>
+  </div>
+</div>

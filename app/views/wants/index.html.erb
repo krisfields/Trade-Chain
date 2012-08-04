@@ -1,2 +1,5 @@
-<h1>Wants#index</h1>
-<p>Find me in app/views/wants/index.html.erb</p>
+<h1>Stuff I Want!</h1>
+<% @wants.each do |want| %>
+<li><%= link_to want.name, want_path(want) %> | <%= link_to want.user.name, user_path(want.user) %></li>
+<% end %>
+

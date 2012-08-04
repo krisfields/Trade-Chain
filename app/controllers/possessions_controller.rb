@@ -29,11 +29,23 @@ class PossessionsController < ApplicationController
   end
 
   def edit
+    @possession = Possession.find(params[:id])
   end
 
   def update
+    @possession = Possession.find(params[:id])
+    if @possession.update_attributes(params[:possession])
+      flash[:notice] = "Successfully updated your item!"
+      redirect_to user_path(current_user)
+    else
+      flash[:error] = "Oops.  Please take care of the problems below before we can update your item."
+      render action: "new"
+    end
   end
 
   def destroy
+    @possession = Possession.find(params[:id])
+    @possession.destroy
+    redirect_to user_path(current_user)
   end
 end
