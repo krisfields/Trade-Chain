@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
 	rolify
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -11,4 +14,7 @@ class User < ActiveRecord::Base
   has_many :wants
   has_many :possessions
   validates_uniqueness_of :name
+  # def to_param
+  #   self.name
+  # end
 end

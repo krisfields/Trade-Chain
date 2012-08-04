@@ -4,10 +4,11 @@ TradeChain::Application.routes.draw do
     root :to => 'home#index'
   end
   root :to => "home#index"
+  resources :wants, :path => "StuffIWant"
+  resources :possessions, :path => "Everything"
   devise_for :users
-  resources :users, :only => [:index]
-  resources :wants
-  resources :possessions
+  resources :users, :path => "", :only => [:index, :show]
+
   
-  match "/:name" => "users#show"
+  #match "/:name" => "users#show"
 end
