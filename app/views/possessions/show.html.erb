@@ -1,2 +1,41 @@
-<h1>Possessions#show</h1>
-<p>Find me in app/views/possessions/show.html.erb</p>
+<h1><%= @possession.name %></h1>
+<%= link_to @possession.trade.name, trade_path(@possession.trade) if @possession.trade %><br>
+<% if @wants_it %>
+<h3>You Want This!</h3>
+<%= link_to "I Changed My Mind", want_path(@want), method: :delete %>
+<br><br>
+<% end %>
+Posted by <%= link_to user_name(@possession.user), user_path(@possession.user) %>
+<br><%= @possession.description %><br>
+<div class="row">
+	<% if current_user != @possession.user %>
+		  <div class="span6 offset1">
+		    <%= simple_form_for(@want) do |f| %>
+		      <%= f.input :value %>
+		      <% if @wants_it %>
+		      	<%= f.hidden_field :possession_id, :value => @possession.id, method: :put %>
+		      	<%= f.submit "Update Value!", class: "btn btn-large btn-primary" %>
+		      <% else %>
+			      <%= f.hidden_field :possession_id, :value => @possession.id %>
+			      <%= f.submit "I Want This!", class: "btn btn-large btn-primary" %>
+		   		 	<% end %>
+		   		 <% end %>
+		  </div>
+		   <div class="column">
+  	<h2>Tips!</h2>
+    <ul>
+    <li>The value you set is visible only by you.  You'll never trade down in value, so make sure you set the value of items you want at least a little higher than the ones you wish to trade.</li>
+  </div>	  
+	<% end %>
+			   	<% @possession.images.each do |image| %>
+		 			<%= image_tag image.photo.thumb('300x200#').url %>
+		 		<% end %>
+	<% if signed_in? and current_user == @possession.user %>
+		<%= form_for @image, :html => { :multipart => true } do |f| %>
+		  <%= f.file_field :photo %>
+		  <%= f.hidden_field :possession_id, :value => @possession.id %>
+		  <%= f.submit "Add Image", class: "btn btn-large btn-primary" %>
+		<% end %>
+	<% end %>
+</div>
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120804191753) do
+ActiveRecord::Schema.define(:version => 20120806180637) do
 
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
@@ -25,11 +25,10 @@ ActiveRecord::Schema.define(:version => 20120804191753) do
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "images", :force => true do |t|
-    t.string   "url"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "possession_id"
-    t.integer  "want_id"
+    t.string   "photo_uid"
   end
 
   create_table "possessions", :force => true do |t|
@@ -39,6 +38,17 @@ ActiveRecord::Schema.define(:version => 20120804191753) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "value"
+    t.integer  "trade_id"
+    t.integer  "wants_count"
+    t.integer  "new_owner"
+  end
+
+  create_table "results", :force => true do |t|
+    t.integer  "giver"
+    t.integer  "receiver"
+    t.integer  "trade_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "roles", :force => true do |t|
@@ -51,6 +61,15 @@ ActiveRecord::Schema.define(:version => 20120804191753) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "trades", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.datetime "date"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -81,12 +100,11 @@ ActiveRecord::Schema.define(:version => 20120804191753) do
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
 
   create_table "wants", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "user_id"
     t.integer  "value"
+    t.integer  "possession_id"
   end
 
 end

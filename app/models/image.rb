@@ -1,5 +1,5 @@
 class Image < ActiveRecord::Base
-  attr_accessible :url, :possession_id, :want_id
+	image_accessor :photo
+  attr_accessible :possession_id, :photo
   belongs_to :possession
-  belongs_to :want
 end

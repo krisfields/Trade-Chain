@@ -1,3 +1,23 @@
-<h3>User</h3>
-<p>User: <%= @user.name %></p>
-<p>Email: <%= @user.email if @user.email %></p>
+<h1><%= @user.name %></h1>
+<p>Email: <%= @user.email if @user.email %>
+<% if current_user == @user %>
+<br><%= link_to 'Edit account', edit_user_registration_path %>
+<% end %>
+</p>
+<%= user_name(@user, possessive=true) %> Items:
+<br>
+<% if @user.possessions.empty? %>
+How sad.  <%= @user.name %> hasn't added any items yet. 
+<% end %>
+<% @user.possessions.each do |possession| %>
+<% if !possession.images.empty? %>
+					<%= image_tag possession.images.first.photo.thumb('150x100#').url %></li>
+				<% end %>
+<% if current_user == @user %>
+	<%= link_to possession.name, edit_possession_path(possession) %>
+<% else %>
+	<%= link_to possession.name, possession_path(possession) %>
+<% end %>
+| <%= link_to possession.trade.name, trade_path(possession.trade) if possession.trade %>
+<br>
+<% end %>

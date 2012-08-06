@@ -1,14 +1,18 @@
 <%= link_to "Trade Chain", root_path, :class => 'brand' %>
 <ul class="nav">
     <li>
-      <%= link_to 'WTF is a Trade Chain?', "#" %>
-    </li>
-    <li>
-      <%= link_to 'Explore', possessions_path %>
+      <%= link_to 'Explore', trades_path %>
     </li>
   <% if user_signed_in? %>
-    <li>
+<!--     <li>
       <%= link_to 'Add Item', new_possession_path %>
+     --></li>
+  <% end %>
+</ul>
+<ul class="nav right_nav">
+    <% if user_signed_in? %>
+    <li>
+      <%= link_to 'WTF is a Trade Chain?', "#" %>
     </li>
     <li>
     <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>        
@@ -20,7 +24,7 @@
   <% end %>
   <% if user_signed_in? %>
     <li>
-    <%= link_to 'Edit account', edit_user_registration_path %>
+    <%= link_to 'My Account', user_path(current_user) %>
     </li>
     <% if current_user.has_role? :admin %>
       <li>
@@ -29,7 +33,7 @@
     <% end %>
   <% else %>
     <li>
-    <%= link_to 'Sign up', new_user_registration_path %>
+    <%= link_to 'Sign Up', new_user_registration_path %>
     </li>
   <% end %>
 </ul>

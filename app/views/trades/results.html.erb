@@ -1,0 +1,4 @@
+<h1>RESULTS! for <%= @trade.name %></h1>
+<% @results.each do |result| %>
+	<%= result.user.name %> gives <%= result.name %> to <%= User.find(result.new_owner).name %><br>
+	<% end %>

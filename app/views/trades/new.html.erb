@@ -1,0 +1,20 @@
+<% provide(:title, 'Add New Trade') %>
+<h1>Add New Trade</h1>
+
+<div class="row">
+  <div class="span6 offset0">
+    <%= simple_form_for(@trade) do |f| %>
+      <%= f.input :name %>
+      <%= f.input :description %>
+      <%= f.input :date %>
+      <%= f.submit "Add Trade", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+   <div class="column">
+  	<h2>Tips!</h2>
+    <ul>
+    <li>Make sure to describe what sort of items are allowed and not allowed</li>  
+    <li>Make sure to let everyone know which party is responsible for shipping or where the trade will be taking place if it's an in person trade</li>
+    <li>Try to choose an end date far enough away that it gives enough time for people to add items, but not so far away as to be lose momentum.</li>
+  </div>
+</div>

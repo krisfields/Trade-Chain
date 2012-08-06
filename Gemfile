@@ -19,3 +19,5 @@ gem "devise", ">= 2.1.2"
 gem "cancan", ">= 1.6.8"
 gem "rolify", ">= 3.1.0"
 gem "friendly_id", ">= 4.0.1"
+gem 'rack-cache', :require => 'rack/cache'
+gem 'dragonfly', '~>0.9.12'

@@ -1,0 +1,15 @@
+<h1><%= @trade.name %></h1>
+<%= @trade.date %><br>
+<%= @trade.description %>
+<div>
+	<ul><h2>Items in Trade</h3>
+		<%= link_to "Add Item", new_possession_path(trade_id: @trade.id) %>
+		<% @trade.possessions.each do |possession| %>
+			<li><%= link_to possession.name, possession_path(possession) %> | <%= link_to possession.user.name, user_path(possession.user) %>
+				<% if !possession.images.empty? %>
+					<%= image_tag possession.images.first.photo.thumb('150x100#').url %></li>
+				<% end %>
+		</ul>
+		<% end %>
+
+

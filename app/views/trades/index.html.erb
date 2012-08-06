@@ -1,0 +1,4 @@
+<h1>Find a trade to participate in!</h1>
+<% @trades.each do |trade| %>
+<li><%= link_to trade.name, trade_path(trade) %> | <%= trade.possessions.count %> items added thus far. | <%= trade.date %></li>
+<% end %>
