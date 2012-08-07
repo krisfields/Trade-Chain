@@ -1,4 +1,4 @@
 <h1>RESULTS! for <%= @trade.name %></h1>
 <% @results.each do |result| %>
-	<%= result.user.name %> gives <%= result.name %> to <%= User.find(result.new_owner).name %><br>
+	<%= link_to result.user.name, user_path(result.user) %> gives <%= link_to result.name, possession_path(result) %> to <%= link_to User.find(result.new_owner).name, user_path(User.find(result.new_owner)) %><br>
 	<% end %>

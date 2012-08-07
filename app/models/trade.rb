@@ -7,29 +7,28 @@ class Trade < ActiveRecord::Base
 
   #reject those items nobody wants
   def initial_prune(items)
-  	puts "Z"*10
-  	p items
-  	i=items.reject {|i| i.wants_count == nil}
-  	puts "ARGLE"
-  	p i
-  	i
+  	items.reject {|i| i.wants_count == nil}
   end
 
-  #reject those items that nobody wants again, with new set of items
-  # def possession_wanted?(possession, items)
-  # 	user=possession.user
-  # 	wanted = []
-  # 	items.each do |i|
-  # 		i.wants.each do |w|
-  # 			wanted << w
-  # 		end
-  # 	end
-  # 	wanted.any? {|w| w.possession_id = possession}
-  # end
-
-  # def has_children?(possession, items)
-  	
-  # end
+  #reject those items nobody wants
+  def prune(items)
+    owners = []
+    items.each do |item|
+      owners << item.user
+    end
+    wants = []
+    owners.each do |owner|
+      owner.wants.each do |want|
+        wants << want.possession
+      end
+    end
+    items.each do |item|
+      if !wants.include?(item)
+        items.delete(item)
+      end
+    end
+    items
+  end
 
   #helper method to determine the items that an item's owner would take in trade for it
   def items_children(item)
@@ -37,16 +36,10 @@ class Trade < ActiveRecord::Base
   	user_wants = user.wants.find_all {|want| want.possession.trade_id = self.id and want.value > item.value}
   	user_wants.sort! {|x,y| x.value <=> y.value}.reverse
   	children = user_wants.map {|want| want.possession }
-  	puts "lol"*10
-  	puts "item #{item.id} wants "
-  	p children
-  	children
   end
 
   #given an item, finds a route back to itself using depth first recursion, taking care to avoid infinite loops due to interior cycles
   def find_trade(item)
-  	puts "E"*10
-  	p item
   	route = [item]
   	items_children(item).each do |child|
   		result = recurse_trade(child, route)
@@ -73,31 +66,38 @@ class Trade < ActiveRecord::Base
 
   #cycles through remaining items, starting the search for available routes.  Creates Result objects for all parts of a route found.
   def find_some_trades(items)
-  	route = find_trade(items.first)
-  	puts "G"*100
-  	p route
-  	if route
-  		puts "Q"*10
-  		p route
-  		0.upto(route.length-2) do |i|
-  			possession = Possession.find(route[i])
-  			possession.new_owner = route[i+1].user.id
-  			possession.save
-  			#Result.create(giver: route[i].id, receiver: route[i+1].id, trade_id: self.id)
-  			items.delete(route[i])
-  		end
-  	end
+    while items.count > 0
+      prune(items)
+      items.each do |item|
+        puts "TEST"*10
+        puts item.name
+      	route = find_trade(item)
+      	if route
+      		0.upto(route.length-2) do |i|
+      			possession = Possession.find(route[i])
+      			possession.new_owner = route[i+1].user.id
+      			possession.save
+      			items.delete(route[i])
+      		end
+      	end
+      end
+    end
   end
 
   #Initialize items to those belonging to trade.  Prune.  Then find some trades.
   def get_results
   	items = self.possessions.find(:all, :order => 'wants_count DESC')
-  	items = initial_prune(items)
-  	puts "C"*10
-  	p items
+    #reset data just for testing
+    items.each do |item|
+      item.new_owner = nil
+      item.save
+    end
+  	items = prune(items)
   	if items
   		find_some_trades(items)
   	end
+    puts "ITEMS"*10
+    p items
   end
 
 end

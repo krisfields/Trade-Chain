@@ -1,5 +1,6 @@
 <h1><%= @trade.name %></h1>
 <%= @trade.date %><br>
+<h2><%= link_to "Results!", results_path(@trade.id) %></h2>
 <%= @trade.description %>
 <div>
 	<ul><h2>Items in Trade</h3>
