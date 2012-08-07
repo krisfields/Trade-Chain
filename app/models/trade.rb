@@ -64,17 +64,16 @@ class Trade < ActiveRecord::Base
     while items.count > 0
       prune(items)
       items.each do |item|
-        if items.include?(item)
         	route = find_trade(item)
-        end
-      	if route
-      		0.upto(route.length-2) do |i|
-      			possession = Possession.find(route[i])
-      			possession.new_owner = route[i+1].user.id
-      			possession.save
-      			items.delete(route[i])
-      		end
-      	end
+        	if route
+        		0.upto(route.length-2) do |i|
+        			possession = Possession.find(route[i])
+        			possession.new_owner = route[i+1].user.id
+        			possession.save
+        			items.delete(route[i])
+              break
+        		end
+        	end
       end
     end
   end
