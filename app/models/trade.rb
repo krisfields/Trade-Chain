@@ -3,12 +3,7 @@ class Trade < ActiveRecord::Base
   #has_many :users
   belongs_to :user
   has_many :results
-  has_many :possessions
-
-  #reject those items nobody wants
-  def initial_prune(items)
-  	items.reject {|i| i.wants_count == nil}
-  end
+  has_many :possessions 
 
   #reject those items nobody wants
   def prune(items)
@@ -69,9 +64,9 @@ class Trade < ActiveRecord::Base
     while items.count > 0
       prune(items)
       items.each do |item|
-        puts "TEST"*10
-        puts item.name
-      	route = find_trade(item)
+        if items.include?(item)
+        	route = find_trade(item)
+        end
       	if route
       		0.upto(route.length-2) do |i|
       			possession = Possession.find(route[i])
@@ -96,8 +91,6 @@ class Trade < ActiveRecord::Base
   	if items
   		find_some_trades(items)
   	end
-    puts "ITEMS"*10
-    p items
   end
 
 end

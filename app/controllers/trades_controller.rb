@@ -46,12 +46,7 @@ class TradesController < ApplicationController
 
   def results
     @trade = Trade.find(params[:id])
-    @get_results = @trade.get_results
+    get_results = @trade.get_results
     @results = @trade.possessions.find_all {|possession| possession.new_owner != nil}
-    # fetch_results = Result.all.find_all {|r| r.trade_id = @trade.id }
-    # @results = []
-    # fetch_results.each do |result|
-    #   @results << [Possession.find(result.giver), Possession.find(result.receiver)]
-    # end
   end
 end

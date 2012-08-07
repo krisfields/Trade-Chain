@@ -7,15 +7,6 @@ class WantsController < ApplicationController
     respond_with(@wants)
   end
 
-  # def show
-  #   @want = Want.find(params[:id])
-  #   respond_with(@want)
-  # end
-
-  # def new
-  #   @want = Want.new
-  # end
-
   def create
     @want = Want.new(params[:want])
     @want.user_id = current_user.id
@@ -27,10 +18,6 @@ class WantsController < ApplicationController
        redirect_to possession_path(@want.possession_id)
     end
   end
-
-  # def edit
-  #   @want = Want.find(params[:id])
-  # end
 
   def update
     @want = Want.find(params[:id])
