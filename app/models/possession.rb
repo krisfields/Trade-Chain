@@ -1,5 +1,5 @@
 class Possession < ActiveRecord::Base
-  attr_accessible :description, :name, :value, :user_id, :trade_id, :owner_id
+  attr_accessible :description, :name, :value, :user_id, :trade_id, :new_owner
   belongs_to :user
   belongs_to :trade
   has_many :images

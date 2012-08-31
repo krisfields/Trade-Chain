@@ -21,3 +21,4 @@ gem "rolify", ">= 3.1.0"
 gem "friendly_id", ">= 4.0.1"
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
+gem 'faker', '1.0.1'
