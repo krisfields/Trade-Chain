@@ -1,8 +1,8 @@
 h1. Trade Chain
 
-Ruby on Rails RESTful web app that allows users to participate in large multi-person trades (aka math trades).  Users can create or join in trades.  They may add items to trades they have chosen to participate in, adding a name, description, unlimited images, and a relative 'value' for the item.  They then select other items in the trade that they'd be interested in receiving.  They place a relative 'value' on each of those too.  On the date of the trade, the user can see which items he is to give to which users and which he is receiving from others.
+Ruby on Rails RESTful web app that allows users to participate in large multi-person trades (aka math trades).  Users can create and/or join in trades.  They may add items to trades they have chosen to participate in.  For each item, they need to add a name and a description, and a relative 'value'.  They may also add unlimited images.  They then select other items in the trade that they'd be interested in receiving.  They place a relative 'value' on each of those too.  The relative values determine what items he might get.  He will always receive items that he considers of higher value than those he is trading away.  On the date of the trade, the user can see which items he is to give to which users and which he is receiving from others.
 
-Essentially, we end up with a distributed weighted graph where ideally we'd like to find the lowest average cost cycles where a user loops back around on himself.  For now, I use a depth first search that ignores the edge costs and avoids cycles that don't lead back to the root node.
+Essentially, we end up with a distributed weighted graph where ideally we'd like to find the lowest average cost cycles where a user loops back around on himself.  For now, however, I use a depth first search that ignores the edge costs and avoids cycles that don't lead back to the root node.
 
 Features/Gems Used:
 
